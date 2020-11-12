@@ -218,6 +218,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &398782522 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7347571264292133757, guid: bbd0dff34b657a64bbab327c41bb1d01, type: 3}
+  m_PrefabInstance: {fileID: 434577098}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &434577098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -688,6 +693,25 @@ Transform:
   m_Father: {fileID: 2055094443}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &639279841 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1231382216183939299, guid: bbd0dff34b657a64bbab327c41bb1d01, type: 3}
+  m_PrefabInstance: {fileID: 985830326}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &639279842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639279841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf447e66f17543a98046d7265489a31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aimTarget: {fileID: 398782522}
+  ball: {fileID: 551230316}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,16 +2018,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316470226204942218, guid: bbd0dff34b657a64bbab327c41bb1d01, type: 3}
       propertyPath: m_CullingMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5316470226204942218, guid: bbd0dff34b657a64bbab327c41bb1d01, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 59ca1b89f33812046a0c8066365574e2, type: 2}
+      objectReference: {fileID: 9100000, guid: 13d5eeebedc7847cea32ef703a4ba13f, type: 2}
     - target: {fileID: 5316470226204942218, guid: bbd0dff34b657a64bbab327c41bb1d01, type: 3}
       propertyPath: m_Avatar
       value: 
       objectReference: {fileID: 9000000, guid: 0fb80be089349cb44a7d5c9c9171f5c3, type: 3}
+    - target: {fileID: 5316470226204942218, guid: bbd0dff34b657a64bbab327c41bb1d01, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5375598184538843717, guid: bbd0dff34b657a64bbab327c41bb1d01, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.002250674

@@ -5,7 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Transform aimTarget; // the target where we aim to land the ball
-    float speed = 3f; // move speed
+    private float[] Speeds = {0.0f,2.0f,1.0f,3.0f};
+    public Vector3 Speed = new Vector3(0, 0, 1);
+    public Vector3 Direction = new Vector3(0,0,1);
+
     float force = 13; // ball impact force
 
     bool hitting; // boolean to know if we are hitting the ball or not 
@@ -24,6 +27,7 @@ public class Player : MonoBehaviour
         aimTargetInitialPosition = aimTarget.position; // initialise the aim position to the center( where we placed it in the editor )
         shotManager = GetComponent<ShotManager>(); // accesing our shot manager component 
         //currentShot = shotManager.topSpin; // defaulting our current shot as topspin
+        //Debug.Log(Speeds[3]);
     }
 
     void Update()
@@ -31,18 +35,37 @@ public class Player : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal"); // get the horizontal axis of the keyboard
         float v = Input.GetAxisRaw("Vertical"); // get the vertical axis of the keyboard
 
-        if (Input.GetKeyDown(KeyCode.W)){
-            animator.SetBool("isForward", true);
+        int moveState = 0;
+        if (Input.GetKey(KeyCode.W)){
+            if (Input.GetKey(KeyCode.LeftShift))
+                moveState = 3;
+            else
+                moveState = 1;
+            TurnToDirection(moveState,1);
         }
-        else if (Input.GetKeyUp(KeyCode.W)){
-            animator.SetBool("isForward", false);
+        else if (Input.GetKey(KeyCode.S)){
+            if (Input.GetKey(KeyCode.LeftShift))
+                moveState = 3;
+            else
+                moveState = 2;
+            TurnToDirection(moveState, 2);
         }
-        if (Input.GetKeyDown(KeyCode.S)){
-            animator.SetBool("isBackward", true);
+        else{
+            if(Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            {
+                moveState = 1;
+                TurnToDirection(moveState, 3);
+            }
+            else if(Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            {
+                moveState = 1;
+                TurnToDirection(moveState, 4);
+            }
         }
-        else if (Input.GetKeyUp(KeyCode.S)){
-            animator.SetBool("isBackward", false);
-        }
+        animator.SetInteger("MovementState", moveState);
+        Speed = Direction.normalized * Speeds[moveState];
+        transform.Translate(Speed * Time.deltaTime);
+
 
         if (Input.GetKeyDown(KeyCode.F)) 
         {
@@ -65,7 +88,7 @@ public class Player : MonoBehaviour
         }
 
 
-
+        /*
         if (hitting)  // if we are trying to hit the ball
         {
             animator.Play("movement"); 
@@ -77,11 +100,77 @@ public class Player : MonoBehaviour
         {
             transform.Translate(new Vector3(h, 0, v) * speed * Time.deltaTime); // move on the court
         }
-
+        */
 
 
     }
-
+    internal void TurnToDirection(int moveState, int dir)
+    {
+        if(dir == 1)
+        {
+            if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            {
+                //tobedone
+                Direction = new Vector3(-1, 0, 1);
+            }
+            else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            {
+                //tobedone
+                Direction = new Vector3(1, 0, 1);
+            }
+            else
+            {
+                Direction = new Vector3(0, 0, 1);
+                //tobedone
+            }
+        }
+        else if(dir == 2 && moveState == 3)
+        {
+            if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            {
+                //tobedone
+                Direction = new Vector3(-1, 0, -1);
+            }
+            else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            {
+                //tobedone
+                Direction = new Vector3(1, 0, -1);
+            }
+            else
+            {
+                //tobedone
+                Direction = new Vector3(0, 0, -1);
+            }
+        }
+        else if(dir == 2 && moveState == 2)
+        {
+            if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            {
+                //tobedone
+                Direction = new Vector3(-1, 0, -1);
+            }
+            else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            {
+                //tobedone
+                Direction = new Vector3(1, 0, -1);
+            }
+            else
+            {
+                //tobedone
+                Direction = new Vector3(0, 0, -1);
+            }
+        }
+        else if(dir ==3)
+        {
+            //tobedone
+            Direction = new Vector3(-1, 0, 0);
+        }
+        else if(dir == 4)
+        {
+            //tobedone
+            Direction = new Vector3(1, 0, 0);
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {

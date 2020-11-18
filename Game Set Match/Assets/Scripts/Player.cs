@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     private float[] Speeds = {0.0f,2.0f,1.0f,3.0f};
     public Vector3 Speed = new Vector3(0, 0, 1);
     public Vector3 Direction = new Vector3(0,0,1);
+    public Vector3 Angle = new Vector3(0, -90, 0);
+    public float[] Angles = { -90.0f, -135.0f, -45.0f, -180.0f, 0.0f, 90.0f, 135.0f, 45.0f };
 
     float force = 13; // ball impact force
 
@@ -36,6 +38,8 @@ public class Player : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical"); // get the vertical axis of the keyboard
 
         int moveState = 0;
+        Angle = new Vector3(0, -90, 0);
+        Direction = new Vector3(0, 0, 1);
         if (Input.GetKey(KeyCode.W)){
             if (Input.GetKey(KeyCode.LeftShift))
                 moveState = 3;
@@ -65,7 +69,7 @@ public class Player : MonoBehaviour
         animator.SetInteger("MovementState", moveState);
         Speed = Direction.normalized * Speeds[moveState];
         transform.Translate(Speed * Time.deltaTime);
-
+        transform.eulerAngles = Angle;
 
         if (Input.GetKeyDown(KeyCode.F)) 
         {
@@ -110,65 +114,66 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
-                //tobedone
-                Direction = new Vector3(-1, 0, 1);
+                Angle = new Vector3(0, Angles[1], 0);
+                //Direction = new Vector3(-1, 0, 1);
             }
             else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
             {
-                //tobedone
-                Direction = new Vector3(1, 0, 1);
+                Angle = new Vector3(0, Angles[2], 0);
+                //Direction = new Vector3(1, 0, 1);
             }
             else
             {
-                Direction = new Vector3(0, 0, 1);
-                //tobedone
+                //Direction = new Vector3(0, 0, 1);
+                Angle = new Vector3(0, Angles[0], 0);
             }
         }
         else if(dir == 2 && moveState == 3)
         {
             if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
-                //tobedone
-                Direction = new Vector3(-1, 0, -1);
+                Angle = new Vector3(0, Angles[6], 0);
+                //Direction = new Vector3(-1, 0, -1);
             }
             else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
             {
-                //tobedone
-                Direction = new Vector3(1, 0, -1);
+                Angle = new Vector3(0, Angles[7], 0);
+                //Direction = new Vector3(1, 0, -1);
             }
             else
             {
-                //tobedone
-                Direction = new Vector3(0, 0, -1);
+                Angle = new Vector3(0, Angles[5], 0);
+                //Direction = new Vector3(0, 0, -1);
             }
         }
         else if(dir == 2 && moveState == 2)
         {
             if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
-                //tobedone
-                Direction = new Vector3(-1, 0, -1);
+                Angle = new Vector3(0, Angles[2], 0);
+                //Direction = new Vector3(-1, 0, -1);
             }
             else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
             {
-                //tobedone
-                Direction = new Vector3(1, 0, -1);
+                Angle = new Vector3(0, Angles[1], 0);
+                //Direction = new Vector3(1, 0, -1);
             }
             else
             {
-                //tobedone
-                Direction = new Vector3(0, 0, -1);
+                Angle = new Vector3(0, Angles[0], 0);
+                //Direction = new Vector3(0, 0, -1);
             }
+            Direction = new Vector3(0, 0, -1);
         }
         else if(dir ==3)
         {
-            //tobedone
-            Direction = new Vector3(-1, 0, 0);
+            Angle = new Vector3(0, Angles[3], 0);
+            //Direction = new Vector3(-1, 0, 0);
         }
         else if(dir == 4)
         {
-            //tobedone
-            Direction = new Vector3(1, 0, 0);
+            Angle = new Vector3(0, Angles[4], 0);
+            //Direction = new Vector3(1, 0, 0);
         }
     }
 

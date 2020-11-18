@@ -965,6 +965,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimTarget: {fileID: 398782522}
+  Speed: {x: 0, y: 0, z: 1}
+  Direction: {x: 0, y: 0, z: 1}
+  Angle: {x: 0, y: -90, z: 0}
+  Angles:
+  - -90
+  - -135
+  - -45
+  - -180
+  - 0
+  - 90
+  - 135
+  - 45
   ball: {fileID: 551230316}
 --- !u!1 &670710822
 GameObject:

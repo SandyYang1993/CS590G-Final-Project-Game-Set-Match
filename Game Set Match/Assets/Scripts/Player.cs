@@ -5,11 +5,15 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Transform aimTarget; // the target where we aim to land the ball
+    public int moveState = 0;
     private float[] Speeds = {0.0f,2.0f,1.0f,3.0f};
     public Vector3 Speed = new Vector3(0, 0, 1);
     public Vector3 Direction = new Vector3(0,0,1);
     public Vector3 Angle = new Vector3(0, -90, 0);
     public float[] Angles = { -90.0f, -135.0f, -45.0f, -180.0f, 0.0f, 90.0f, 135.0f, 45.0f };
+    public float MouseX = 0;
+    public float MouseY = 0;
+    public string[] Shots = { "BackhandUpswing", "ForehandUpswing", "BackhandChop", "ForehandChop" };
 
     float force = 13; // ball impact force
 
@@ -37,7 +41,7 @@ public class Player : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal"); // get the horizontal axis of the keyboard
         float v = Input.GetAxisRaw("Vertical"); // get the vertical axis of the keyboard
 
-        int moveState = 0;
+        moveState = 0;
         Angle = new Vector3(0, -90, 0);
         Direction = new Vector3(0, 0, 1);
         if (Input.GetKey(KeyCode.W)){
@@ -57,14 +61,29 @@ public class Player : MonoBehaviour
         else{
             if(Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
-                moveState = 1;
+                if (Input.GetKey(KeyCode.LeftShift))
+                    moveState = 3;
+                else
+                    moveState = 1; ;
                 TurnToDirection(moveState, 3);
             }
             else if(Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
             {
-                moveState = 1;
+                if (Input.GetKey(KeyCode.LeftShift))
+                    moveState = 3;
+                else
+                    moveState = 1;
                 TurnToDirection(moveState, 4);
             }
+        }
+        int shotType = DetectShot();
+        if (shotType!=-1)
+            animator.Play(Shots[shotType]);
+        if(animator.GetCurrentAnimatorStateInfo(0).IsTag("Shot"))
+        {
+            moveState = 0;
+            Direction = new Vector3(0, 0, 1);
+            Angle = new Vector3(0, -90, 0);
         }
         animator.SetInteger("MovementState", moveState);
         Speed = Direction.normalized * Speeds[moveState];
@@ -176,7 +195,36 @@ public class Player : MonoBehaviour
             //Direction = new Vector3(1, 0, 0);
         }
     }
+    internal int DetectShot()
+    {
+        int shotType = -1;
+        if (Input.GetMouseButton(0))
+        {
+            MouseX += Input.GetAxis("Mouse X");
+            MouseY += Input.GetAxis("Mouse Y");
+        }
+        if(Input.GetMouseButtonUp(0))
+        {
+            if(MouseY>=0)
+            {
+                if (ball.position.z < transform.position.z)
+                    shotType = 0;
+                else
+                    shotType = 1;
+            }
+            else
+            {
+                if (ball.position.z < transform.position.z)
+                    shotType = 2;
+                else
+                    shotType = 3;
+            }
+            MouseX = 0.0f;
+            MouseY = 0.0f;
+        }
+        return shotType;
 
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ball")) // if we collide with the ball 

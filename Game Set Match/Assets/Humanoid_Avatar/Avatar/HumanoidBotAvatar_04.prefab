@@ -223,6 +223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2832172907901645552}
   - component: {fileID: 5316470226204942218}
+  - component: {fileID: 6732600229866726944}
   m_Layer: 0
   m_Name: HumanoidBotAvatar_04
   m_TagString: Untagged
@@ -238,7 +239,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231382216183939299}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.54, y: 1.151, z: -1.13}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7347571264292133757}
@@ -265,6 +266,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &6732600229866726944
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231382216183939299}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9267253, y: 2.0248358, z: 0.64876646}
+  m_Center: {x: 0.19500631, y: 0.98189867, z: 0.296895}
 --- !u!1 &1315093900556143906
 GameObject:
   m_ObjectHideFlags: 0
@@ -2427,6 +2441,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4463798955275929023}
     m_Modifications:
+    - target: {fileID: 685696947004774092, guid: a76e66ebfce8eb24b97940377318d833, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2408849856945262209, guid: a76e66ebfce8eb24b97940377318d833, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.02
@@ -2483,7 +2501,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestingRacket
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 685696947004774092, guid: a76e66ebfce8eb24b97940377318d833, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a76e66ebfce8eb24b97940377318d833, type: 3}
 --- !u!4 &2537182686387896267 stripped
 Transform:

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MathNet.Numerics.Distributions;
 
 public class Player : MonoBehaviour
 {
@@ -14,10 +15,11 @@ public class Player : MonoBehaviour
     public float MouseX = 0;
     public float MouseY = 0;
     public string[] Shots = { "BackhandUpswing", "ForehandUpswing", "BackhandChop", "ForehandChop" };
+    public float std = 0.02f;
 
-    float force = 13; // ball impact force
+    //float force = 13; // ball impact force
 
-    bool hitting; // boolean to know if we are hitting the ball or not 
+    public bool hitting = false; // boolean to know if we are hitting the ball or not 
 
     public Transform ball; // the ball 
     Animator animator;
@@ -34,10 +36,13 @@ public class Player : MonoBehaviour
         shotManager = GetComponent<ShotManager>(); // accesing our shot manager component 
         //currentShot = shotManager.topSpin; // defaulting our current shot as topspin
         //Debug.Log(Speeds[3]);
+        
     }
 
     void Update()
     {
+        //Normal normalDist = new Normal();
+        //Debug.Log(normalDist.Sample());
         float h = Input.GetAxisRaw("Horizontal"); // get the horizontal axis of the keyboard
         float v = Input.GetAxisRaw("Vertical"); // get the vertical axis of the keyboard
 
@@ -78,7 +83,15 @@ public class Player : MonoBehaviour
         }
         int shotType = DetectShot();
         if (shotType!=-1)
+        {
+            if (hitting)
+                CastShot(shotType);
             animator.Play(Shots[shotType]);
+            MouseX = 0.0f;
+            MouseY = 0.0f;
+        }
+            
+        
         if(animator.GetCurrentAnimatorStateInfo(0).IsTag("Shot"))
         {
             moveState = 0;
@@ -90,25 +103,25 @@ public class Player : MonoBehaviour
         transform.Translate(Speed * Time.deltaTime);
         transform.eulerAngles = Angle;
 
-        if (Input.GetKeyDown(KeyCode.F)) 
-        {
-            hitting = true; // we are trying to hit the wall and aim where to make it land
-            currentShot = shotManager.topSpin; // set our current shot to top spin
-        }
-        else if (Input.GetKeyUp(KeyCode.F))
-        {
-            hitting = false; // we let go of the key so we are not hitting anymore and this 
-        }                    // is used to alternate between moving the aim target and ourself
+        //if (Input.GetKeyDown(KeyCode.F)) 
+        //{
+        //    hitting = true; // we are trying to hit the wall and aim where to make it land
+        //    currentShot = shotManager.topSpin; // set our current shot to top spin
+        //}
+        //else if (Input.GetKeyUp(KeyCode.F))
+        //{
+        //    hitting = false; // we let go of the key so we are not hitting anymore and this 
+        //}                    // is used to alternate between moving the aim target and ourself
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            hitting = true; // we are trying to hit the ball and aim where to make it land
-            currentShot = shotManager.flat; // set our current shot to top spin
-        }
-        else if (Input.GetKeyUp(KeyCode.E))
-        {
-            hitting = false;
-        }
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    hitting = true; // we are trying to hit the ball and aim where to make it land
+        //    currentShot = shotManager.flat; // set our current shot to top spin
+        //}
+        //else if (Input.GetKeyUp(KeyCode.E))
+        //{
+        //    hitting = false;
+        //}
 
 
         /*
@@ -219,33 +232,98 @@ public class Player : MonoBehaviour
                 else
                     shotType = 3;
             }
-            MouseX = 0.0f;
-            MouseY = 0.0f;
+            //MouseX = 0.0f;
+            //MouseY = 0.0f;
         }
         return shotType;
 
     }
+    internal void CastShot(int shotType)
+    {
+        Vector3 position = ball.position;
+        if ((shotType == 0 || shotType == 1) && position.y < 5.2f)
+            position.y = 5.2f;
+        MouseX = MouseX / 5.0f;
+        if (MouseX > 3.0f) MouseX = 3.0f;
+        if (MouseX < -3.0f) MouseX = -3.0f;
+        if (MouseY > 8.0f) MouseY = 8.0f;
+        if (MouseY < -8.0f) MouseY = -8.0f;
+        Normal normalDistX = new Normal(MouseX,std);
+        MouseX = (float)normalDistX.Sample();
+        Normal normalDistY = new Normal(MouseY, std);
+        MouseY = (float)normalDistY.Sample();
+        Vector3 ballDir = new Vector3(-Mathf.Abs(MouseY), 0, MouseX);
+        //Debug.Log(ballDir);
+        ballDir = ballDir.normalized;
+        float force = Mathf.Sqrt(MouseX * MouseX + MouseY * MouseY);
+        float upForce;
+        float hitForce;
+        float drag;
+        Shot current;
+        if (shotType == 0 || shotType == 1)
+            current = shotManager.upSwing;
+        else
+            current = shotManager.chop;
+
+        upForce = force * current.upForce;
+        hitForce = force * current.hitForce;
+        drag = current.drag;
+        if (shotType == 0 || shotType == 1)
+        {
+            if (upForce > 3.0f) upForce = 3.0f;
+        }
+        else
+        {
+            if (upForce > 4.5f) upForce = 4.5f;
+        }
+        if (position.y > 5.2f)
+        {
+            upForce = upForce - (position.y - 5.2f) / 0.6f * (upForce * 2.0f / 3.0f);
+            hitForce = hitForce + (position.y - 5.2f) / 0.6f * (hitForce / 2.0f);
+        }
+        if (position.y < 5.2f)
+        {
+            upForce = upForce + (5.2f - position.y) / 0.7f * (upForce / 3.0f);
+            hitForce = hitForce - (5.2f - position.y) / 0.7f * (hitForce / 3.0f);
+        }
+        //Debug.Log(force);
+        //Debug.Log(upForce);
+        //Debug.Log(hitForce);
+        //Debug.Log(ballDir);
+
+        ball.position = position;
+        ball.GetComponent<Rigidbody>().velocity = ballDir*hitForce+ new Vector3(0, upForce, 0);
+        ball.GetComponent<Rigidbody>().drag = drag;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ball")) // if we collide with the ball 
-        {
-            Vector3 dir = aimTarget.position - transform.position; // get the direction to where we want to send the ball
-            other.GetComponent<Rigidbody>().velocity = dir.normalized * currentShot.hitForce + new Vector3(0, currentShot.upForce, 0);
-            //add force to the ball plus some upward force according to the shot being played
+        //if (other.CompareTag("Ball")) // if we collide with the ball 
+        //{
+        //    Vector3 dir = aimTarget.position - transform.position; // get the direction to where we want to send the ball
+        //    other.GetComponent<Rigidbody>().velocity = dir.normalized * currentShot.hitForce + new Vector3(0, currentShot.upForce, 0);
+        //    //add force to the ball plus some upward force according to the shot being played
 
-            Vector3 ballDir = ball.position - transform.position; // get the direction of the ball compared to us to know if it is
-            if (ballDir.x >= 0)                                   // on out right or left side 
-            {
-                animator.Play("forehand");                        // play a forhand animation if the ball is on our right
-            }
-            else                                                  // otherwise play a backhand animation 
-            {
-                animator.Play("backhand");
-            }
+        //    Vector3 ballDir = ball.position - transform.position; // get the direction of the ball compared to us to know if it is
+        //    if (ballDir.x >= 0)                                   // on out right or left side 
+        //    {
+        //        animator.Play("forehand");                        // play a forhand animation if the ball is on our right
+        //    }
+        //    else                                                  // otherwise play a backhand animation 
+        //    {
+        //        animator.Play("backhand");
+        //    }
 
-            aimTarget.position = aimTargetInitialPosition; // reset the position of the aiming gameObject to it's original position ( center)
+        //    aimTarget.position = aimTargetInitialPosition; // reset the position of the aiming gameObject to it's original position ( center)
 
-        }
+        //}
+        if (other.CompareTag("Ball"))
+            hitting = true;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Ball"))
+            hitting = false;
     }
 
 

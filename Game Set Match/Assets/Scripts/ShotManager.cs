@@ -7,10 +7,11 @@ public class Shot
 {
     public float upForce;
     public float hitForce;
+    public float drag;
 }
 
 public class ShotManager : MonoBehaviour
 {
-    public Shot topSpin;
-    public Shot flat;
+    public Shot upSwing;
+    public Shot chop;
 }

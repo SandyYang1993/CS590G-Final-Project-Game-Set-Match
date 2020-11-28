@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public float MouseY = 0;
     public string[] Shots = { "BackhandUpswing", "ForehandUpswing", "BackhandChop", "ForehandChop" };
     public float std = 0.02f;
+    public int hittercode;
 
     //float force = 13; // ball impact force
 
@@ -36,7 +37,7 @@ public class Player : MonoBehaviour
         shotManager = GetComponent<ShotManager>(); // accesing our shot manager component 
         //currentShot = shotManager.topSpin; // defaulting our current shot as topspin
         //Debug.Log(Speeds[3]);
-        
+        hittercode = 1;
     }
 
     void Update()
@@ -294,6 +295,8 @@ public class Player : MonoBehaviour
         ball.position = position;
         ball.GetComponent<Rigidbody>().velocity = ballDir*hitForce+ new Vector3(0, upForce, 0);
         ball.GetComponent<Rigidbody>().drag = drag;
+        ball.GetComponent<Ball>().hitter = hittercode;
+        ball.GetComponent<Ball>().fulfill = false;
     }
 
     private void OnTriggerEnter(Collider other)

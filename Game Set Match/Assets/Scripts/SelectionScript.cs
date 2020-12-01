@@ -20,6 +20,20 @@ public class SelectionScript : MonoBehaviour
     private Vector3 OpponentCharecterPosition;
     private Vector3 OpponentOffScreen;
     private int OpponentCharecterInt = 1;
+    private readonly string playerAvatar = "playerAvatar";
+    private readonly string opponentAvatar = "opponentAvatar";
+
+    // playerAvatar Map 
+    // 1 -> avatar2
+    // 2 -> avatar3
+    // 3 -> avatar4
+    // 4 -> avatar1
+
+    // opponentAvatar Map 
+    // 1 -> avatar2
+    // 2 -> avatar3
+    // 3 -> avatar4
+    // 4 -> avatar1
 
     private void Awake(){
 
@@ -34,6 +48,7 @@ public class SelectionScript : MonoBehaviour
 
     	switch(CharecterInt){
     		case 1:
+                PlayerPrefs.SetInt(playerAvatar,1);
     			avatar1.SetActive(false) ;
     			avatar1.transform.position = OffScreen;
     			avatar2.transform.position = CharecterPosition;
@@ -42,6 +57,7 @@ public class SelectionScript : MonoBehaviour
     			CharecterInt++;
     			break;
     		case 2:
+                PlayerPrefs.SetInt(playerAvatar,2);
     			avatar2.SetActive(false) ;
     			avatar2.transform.position = OffScreen;
     			avatar3.transform.position = CharecterPosition;
@@ -50,6 +66,7 @@ public class SelectionScript : MonoBehaviour
     			CharecterInt++;
     			break;
     		case 3:
+                PlayerPrefs.SetInt(playerAvatar,3);
     			avatar3.SetActive(false) ;
     			avatar3.transform.position = OffScreen;
     			avatar4.transform.position = CharecterPosition;
@@ -58,6 +75,7 @@ public class SelectionScript : MonoBehaviour
     			CharecterInt++;
     			break;
     		case 4:
+                PlayerPrefs.SetInt(playerAvatar,4);
     			avatar4.SetActive(false) ;
     			avatar4.transform.position = OffScreen;
     			avatar1.transform.position = CharecterPosition;
@@ -75,6 +93,7 @@ public class SelectionScript : MonoBehaviour
     public void PrevCharecter(){
     	switch(CharecterInt){
     		case 1:
+                PlayerPrefs.SetInt(playerAvatar,4);
     			avatar2.SetActive(false) ;
     			avatar2.transform.position = OffScreen;
     			avatar1.transform.position = CharecterPosition;
@@ -83,6 +102,7 @@ public class SelectionScript : MonoBehaviour
     			ResetInt();
     			break;
     		case 2:
+                PlayerPrefs.SetInt(playerAvatar,1);
     			avatar3.SetActive(false) ;
     			avatar3.transform.position = OffScreen;
     			avatar2.transform.position = CharecterPosition;
@@ -91,6 +111,7 @@ public class SelectionScript : MonoBehaviour
     			CharecterInt--;
     			break;
     		case 3:
+                PlayerPrefs.SetInt(playerAvatar,2);
     			avatar4.SetActive(false) ;
     			avatar4.transform.position = OffScreen;
     			avatar3.transform.position = CharecterPosition;
@@ -99,6 +120,7 @@ public class SelectionScript : MonoBehaviour
     			CharecterInt--;
     			break;
     		case 4:
+                PlayerPrefs.SetInt(playerAvatar,3);
     			avatar1.SetActive(false) ;
     			avatar1.transform.position = OffScreen;
     			avatar4.transform.position = CharecterPosition;
@@ -117,6 +139,7 @@ public class SelectionScript : MonoBehaviour
 
         switch(OpponentCharecterInt){
             case 1:
+                PlayerPrefs.SetInt(opponentAvatar,1);
                 opponentAvatar1.SetActive(false) ;
                 opponentAvatar1.transform.position = OpponentOffScreen;
                 opponentAvatar2.transform.position = OpponentCharecterPosition;
@@ -125,6 +148,7 @@ public class SelectionScript : MonoBehaviour
                 OpponentCharecterInt++;
                 break;
             case 2:
+                PlayerPrefs.SetInt(opponentAvatar,2);
                 opponentAvatar2.SetActive(false) ;
                 opponentAvatar2.transform.position = OpponentOffScreen;
                 opponentAvatar3.transform.position = OpponentCharecterPosition;
@@ -133,6 +157,7 @@ public class SelectionScript : MonoBehaviour
                 OpponentCharecterInt++;
                 break;
             case 3:
+                PlayerPrefs.SetInt(opponentAvatar,3);
                 opponentAvatar3.SetActive(false) ;
                 opponentAvatar3.transform.position = OpponentOffScreen;
                 opponentAvatar4.transform.position = OpponentCharecterPosition;
@@ -141,6 +166,7 @@ public class SelectionScript : MonoBehaviour
                 OpponentCharecterInt++;
                 break;
             case 4:
+                PlayerPrefs.SetInt(opponentAvatar,4);
                 opponentAvatar4.SetActive(false) ;
                 opponentAvatar4.transform.position = OpponentOffScreen;
                 opponentAvatar1.transform.position = OpponentCharecterPosition;
@@ -158,6 +184,7 @@ public class SelectionScript : MonoBehaviour
     public void OpponentPrevCharecter(){
         switch(OpponentCharecterInt){
             case 1:
+                PlayerPrefs.SetInt(opponentAvatar,4);
                 opponentAvatar2.SetActive(false) ;
                 opponentAvatar2.transform.position = OpponentOffScreen;
                 opponentAvatar1.transform.position = OpponentCharecterPosition;
@@ -166,6 +193,7 @@ public class SelectionScript : MonoBehaviour
                 OpponentResetInt();
                 break;
             case 2:
+                PlayerPrefs.SetInt(opponentAvatar,1);
                 opponentAvatar3.SetActive(false) ;
                 opponentAvatar3.transform.position = OpponentOffScreen;
                 opponentAvatar2.transform.position = OpponentCharecterPosition;
@@ -174,6 +202,7 @@ public class SelectionScript : MonoBehaviour
                 OpponentCharecterInt--;
                 break;
             case 3:
+                PlayerPrefs.SetInt(opponentAvatar,2);
                 opponentAvatar4.SetActive(false) ;
                 opponentAvatar4.transform.position = OpponentOffScreen;
                 opponentAvatar3.transform.position = OpponentCharecterPosition;
@@ -182,6 +211,7 @@ public class SelectionScript : MonoBehaviour
                 OpponentCharecterInt--;
                 break;
             case 4:
+                PlayerPrefs.SetInt(opponentAvatar,3);
                 opponentAvatar1.SetActive(false) ;
                 opponentAvatar1.transform.position = OpponentOffScreen;
                 opponentAvatar4.transform.position = OpponentCharecterPosition;

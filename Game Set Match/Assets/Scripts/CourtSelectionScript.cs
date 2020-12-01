@@ -12,6 +12,13 @@ public class CourtSelectionScript : MonoBehaviour
     private Vector3 CourtPosition;
     private Vector3 OffScreen;
    	private int CourtInt = 1;
+    private readonly string courtType = "courtType";
+
+    // Court Types Map
+    // 1 -> court2
+    // 2 -> court3
+    // 3 -> court4
+    // 4 -> court1
 
     private void Awake(){
 
@@ -23,6 +30,7 @@ public class CourtSelectionScript : MonoBehaviour
 
     	switch(CourtInt){
     		case 1:
+                PlayerPrefs.SetInt(courtType,1);
     			court1.SetActive(false) ;
     			court1.transform.position = OffScreen;
     			court2.transform.position = CourtPosition;
@@ -31,6 +39,7 @@ public class CourtSelectionScript : MonoBehaviour
     			CourtInt++;
     			break;
     		case 2:
+                PlayerPrefs.SetInt(courtType,2);
     			court2.SetActive(false) ;
     			court2.transform.position = OffScreen;
     			court3.transform.position = CourtPosition;
@@ -38,7 +47,8 @@ public class CourtSelectionScript : MonoBehaviour
     			Debug.Log("Court Changed to: " + court3.name);
     			CourtInt++;
     			break;
-    		case 3:
+    		case 3:   
+                PlayerPrefs.SetInt(courtType,3);
     			court3.SetActive(false) ;
     			court3.transform.position = OffScreen;
     			court4.transform.position = CourtPosition;
@@ -47,6 +57,7 @@ public class CourtSelectionScript : MonoBehaviour
     			CourtInt++;
     			break;
     		case 4:
+                PlayerPrefs.SetInt(courtType,4);
     			court4.SetActive(false) ;
     			court4.transform.position = OffScreen;
     			court1.transform.position = CourtPosition;
@@ -64,6 +75,7 @@ public class CourtSelectionScript : MonoBehaviour
     public void PrevCourt(){
     	switch(CourtInt){
     		case 1:
+                PlayerPrefs.SetInt(courtType,4);
     			court2.SetActive(false) ;
     			court2.transform.position = OffScreen;
     			court1.transform.position = CourtPosition;
@@ -72,6 +84,7 @@ public class CourtSelectionScript : MonoBehaviour
     			ResetInt();
     			break;
     		case 2:
+                PlayerPrefs.SetInt(courtType,1);   
     			court3.SetActive(false) ;
     			court3.transform.position = OffScreen;
     			court2.transform.position = CourtPosition;
@@ -80,6 +93,7 @@ public class CourtSelectionScript : MonoBehaviour
     			CourtInt--;
     			break;
     		case 3:
+                PlayerPrefs.SetInt(courtType,2);
     			court4.SetActive(false) ;
     			court4.transform.position = OffScreen;
     			court3.transform.position = CourtPosition;
@@ -88,6 +102,7 @@ public class CourtSelectionScript : MonoBehaviour
     			CourtInt--;
     			break;
     		case 4:
+                PlayerPrefs.SetInt(courtType,3);
     			court1.SetActive(false) ;
     			court1.transform.position = OffScreen;
     			court4.transform.position = CourtPosition;

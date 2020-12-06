@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public int hitter;//0:not served; 1:player; 2:opponent;
+    public int shotType; //0:serve; 1:upswing; 2:chop;
     public bool fulfill;//whether the ball has hit the opposite court
     public int score;// 0:nobody scored yet; 1;player scored; 2:opponent scored;
     void Start()

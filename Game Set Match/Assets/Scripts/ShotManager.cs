@@ -7,6 +7,7 @@ public class Shot
 {
     public float upForce;
     public float hitForce;
+    public float reflection;
     public float drag;
 }
 

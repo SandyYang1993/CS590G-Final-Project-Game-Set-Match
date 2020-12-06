@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>(); // referennce out animator
-        aimTargetInitialPosition = aimTarget.position; // initialise the aim position to the center( where we placed it in the editor )
+        //aimTargetInitialPosition = aimTarget.position; // initialise the aim position to the center( where we placed it in the editor )
         shotManager = GetComponent<ShotManager>(); // accesing our shot manager component 
         //currentShot = shotManager.topSpin; // defaulting our current shot as topspin
         //Debug.Log(Speeds[3]);
@@ -267,7 +267,7 @@ public class Player : MonoBehaviour
             current = shotManager.chop;
 
         upForce = force * current.upForce;
-        hitForce = force * current.hitForce;
+        hitForce = force * current.hitForce + ball.GetComponent<Rigidbody>().velocity.magnitude * current.reflection;
         drag = current.drag;
         if (shotType == 0 || shotType == 1)
         {
@@ -297,6 +297,10 @@ public class Player : MonoBehaviour
         ball.GetComponent<Rigidbody>().drag = drag;
         ball.GetComponent<Ball>().hitter = hittercode;
         ball.GetComponent<Ball>().fulfill = false;
+        if (shotType == 0 || shotType == 1)
+            ball.GetComponent<Ball>().shotType = 1;
+        else
+            ball.GetComponent<Ball>().shotType = 2;
     }
 
     private void OnTriggerEnter(Collider other)

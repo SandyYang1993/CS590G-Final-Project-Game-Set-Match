@@ -4,23 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/EngGameWon.unity
-    guid: 84d0c489f380f4ba0b5b92125f1a6256
-  - enabled: 1
-    path: Assets/Scenes/CharechterSelection.unity
-    guid: 41e1b352bf2b54b59a204ef5f115089d
-  - enabled: 1
-    path: Assets/Scenes/CourtSelection.unity
-    guid: e9dec0a1070d94d7284b47080251cc5a
-  - enabled: 1
-    path: Assets/Scenes/EngGameLoss.unity
-    guid: 9092209b86f884476809f7c8ffb20077
-  - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
-    path: Assets/Scenes/StartUpScene.unity
-    guid: 4c8dfcd999e104f5db81a0338feb44fe
+  m_Scenes: []
   m_configObjects: {}

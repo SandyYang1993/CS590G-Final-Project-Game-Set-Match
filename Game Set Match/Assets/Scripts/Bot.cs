@@ -73,7 +73,8 @@ public class Bot : MonoBehaviour
         }
         else if(FSMstate == 2)
         {
-            FSMstate = 0;
+            if(ball.GetComponent<Ball>().hitter == hittercode)
+                FSMstate = 0;
         }
 
         if (FSMstate == 0)

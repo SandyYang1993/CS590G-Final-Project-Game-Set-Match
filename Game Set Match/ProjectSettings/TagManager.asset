@@ -9,6 +9,7 @@ TagManager:
   - Out
   - In_op
   - In_p
+  - Bot
   layers:
   - Default
   - TransparentFX

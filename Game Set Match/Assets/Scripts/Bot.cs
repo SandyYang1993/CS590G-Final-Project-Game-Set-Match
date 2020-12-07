@@ -446,6 +446,7 @@ public class Bot : MonoBehaviour
     }
     internal void CastShot(int shotType)
     {
+        ball.GetComponent<Ball>().PlayHitSound();
         Vector3 position = ball.position;
         if ((shotType == 0 || shotType == 1) && position.y < 5.2f)
             position.y = 5.2f;

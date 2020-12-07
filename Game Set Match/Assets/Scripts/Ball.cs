@@ -10,8 +10,10 @@ public class Ball : MonoBehaviour
     public int score;// 0:nobody scored yet; 1;player scored; 2:opponent scored;
     public int serveindex;//-1:unset;
     public string[] servebounds = { "Serve_1" , "Serve_2", "Serve_3", "Serve_4" };
+    public AudioClip tennishit;
+    public AudioClip tennisbounce;
+    private AudioSource source;
 
-       
     void Start()
     {
         score = 0;
@@ -19,6 +21,29 @@ public class Ball : MonoBehaviour
         //hitter = 0;
         fulfill = false;
         serveindex = -1;
+        tennishit = MakeSubclip(tennishit, 0.020f, 0.15f);
+        tennisbounce = MakeSubclip(tennisbounce, 0.010f, 0.070f);
+        source = GetComponent<AudioSource>();
+    }
+    private AudioClip MakeSubclip(AudioClip clip, float start, float stop)
+    {
+        /* Create a new audio clip */
+        int frequency = clip.frequency;
+        float timeLength = stop - start;
+        int samplesLength = (int)(frequency * timeLength);
+        AudioClip newClip = AudioClip.Create(clip.name + "-sub", samplesLength, 1, frequency, false);
+        /* Create a temporary buffer for the samples */
+        float[] data = new float[samplesLength];
+        /* Get the data from the original clip */
+        clip.GetData(data, (int)(frequency * start));
+        /* Transfer the data to the new clip */
+        newClip.SetData(data, 0);
+        /* Return the sub clip */
+        return newClip;
+    }
+    public void PlayHitSound()
+    {
+        source.PlayOneShot(tennishit);
     }
 
     // Update is called once per frame
@@ -38,6 +63,8 @@ public class Ball : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.CompareTag("Player") && !other.CompareTag("Bot"))
+            source.PlayOneShot(tennisbounce);
         if (score != 0) return;
         if(shotType == 0)
         {

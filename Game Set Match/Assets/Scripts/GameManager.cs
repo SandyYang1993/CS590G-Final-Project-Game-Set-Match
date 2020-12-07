@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,7 +17,13 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public GameObject bot;
     public GameObject ball;
-    
+    public Text playerscoredis;
+    public Text botscoredis;
+    public Text prompt;
+    public AudioClip cheerplayer;
+    public AudioClip cheerbot;
+    private AudioSource source;
+
     //5 states:
     //0 game set: place player at initial position. no one moves now. destroy the previous ball. leftclick to serve state.
     //1 serve: start serving. initialize the ball. enter play state or game end state.
@@ -27,12 +34,15 @@ public class GameManager : MonoBehaviour
     {
         pScore = 0;
         opScore = 0;
+        playerscoredis.text = "Player: " + pScore;
+        botscoredis.text = "Bot:     " + opScore;
         FSMstate = 0;
         Instantiate(playerprefab, standings[0], Quaternion.identity);
         Instantiate(botprefab, standings[1], Quaternion.identity);
         player = GameObject.FindWithTag("Player");
         bot = GameObject.FindWithTag("Bot");
         ball = null;
+        source = GetComponent<AudioSource>();
     }
 
     
@@ -57,9 +67,19 @@ public class GameManager : MonoBehaviour
                 player.GetComponent<Player>().ball = null;
                 bot.GetComponent<Bot>().ball = null;
             }
-                
+            if ((pScore + opScore) % 2 == 0)
+            {
+                prompt.text = "Player's turn to serve. Please leftclick.";
+            }
+            else
+            {
+                prompt.text = "Bot's turn to serve. Please leftclick.";
+            }
             if (Input.GetMouseButtonUp(0))
+            {
+                prompt.text = "";
                 FSMstate = 1;
+            }   
         }
         else if(FSMstate == 1)
         {
@@ -104,9 +124,20 @@ public class GameManager : MonoBehaviour
             else if (ball.GetComponent<Ball>().score != 0)
             {
                 if (ball.GetComponent<Ball>().score == 1)
+                {
                     pScore++;
+                    prompt.text = "Player scored.";
+                    source.PlayOneShot(cheerplayer);
+                }
                 else
+                {
                     opScore++;
+                    prompt.text = "Bot scored.";
+                    source.PlayOneShot(cheerbot);
+                }
+                    
+                playerscoredis.text = "Player: " + pScore;
+                botscoredis.text = "Bot:     " + opScore;
                 FSMstate = 3;
             }
         }
@@ -115,9 +146,19 @@ public class GameManager : MonoBehaviour
             if(ball.GetComponent<Ball>().score != 0)
             {
                 if (ball.GetComponent<Ball>().score == 1)
-                   pScore++;
+                {
+                    pScore++;
+                    prompt.text = "Player scored.";
+                    source.PlayOneShot(cheerplayer);
+                }
                 else
-                   opScore++;
+                {
+                    opScore++;
+                    prompt.text = "Bot scored.";
+                    source.PlayOneShot(cheerbot);
+                }
+                playerscoredis.text = "Player: " + pScore;
+                botscoredis.text = "Bot:     " + opScore;
                 FSMstate = 3;
             }
         }
@@ -139,7 +180,11 @@ public class GameManager : MonoBehaviour
             else
             {
                 if (Input.GetMouseButtonUp(0))
+                {
+                    prompt.text = "";
                     FSMstate = 0;
+                    source.Stop();
+                } 
             }
         }
         else if (FSMstate == 4)

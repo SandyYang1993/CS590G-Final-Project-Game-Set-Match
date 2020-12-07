@@ -9,7 +9,7 @@ public class Ball : MonoBehaviour
     public bool fulfill;//whether the ball has hit the opposite court
     public int score;// 0:nobody scored yet; 1;player scored; 2:opponent scored;
     public int serveindex;//-1:unset;
-    public float[,] servebounds = { { 0.67f, 4.77f, -6.28f, -3.2f }, { 4.77f, 8.93f, -3.20f, -0.12f }, { 0.67f, 4.77f, -3.2f, -0.12f }, { 4.77f, 8.93f, -6.28f, -3.2f } };
+    public string[] servebounds = { "Serve_1" , "Serve_2", "Serve_3", "Serve_4" };
 
        
     void Start()
@@ -29,11 +29,11 @@ public class Ball : MonoBehaviour
             if (transform.position.x > 4.77f && transform.position.z > -3.2f)
                 serveindex = 0;
             else if (transform.position.x > 4.77f && transform.position.z < -3.2f)
-                serveindex = 2;
+                serveindex = 1;
             else if (transform.position.x < 4.77f && transform.position.z > -3.2f)
                 serveindex = 3;
             else
-                serveindex = 1;
+                serveindex = 2;
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -43,11 +43,14 @@ public class Ball : MonoBehaviour
         {
             if (other.CompareTag("Player") || other.CompareTag("Bot"))
                 return;
-            if(!fulfill)
+            else if(!fulfill)
             {
-                if (transform.position.x >= servebounds[serveindex,0] && transform.position.x <= servebounds[serveindex,1] && transform.position.z >= servebounds[serveindex,2] && transform.position.z <= servebounds[serveindex,3] && transform.position.y <= 4.7f)
+                Debug.Log(transform.position);
+                Debug.Log(other.tag);
+                if (other.CompareTag(servebounds[serveindex]))
                 {
                     fulfill = true;
+                    Debug.Log("true");
                 }
                 else
                 {
@@ -64,7 +67,7 @@ public class Ball : MonoBehaviour
         }
         else
         {
-            if (other.CompareTag("Out") || other.CompareTag("Wall"))
+            if (other.CompareTag("Out") || other.CompareTag("Wall") || other.CompareTag("Net"))
             {
                 if (hitter == 1)
                 {
@@ -81,7 +84,7 @@ public class Ball : MonoBehaviour
                         score = 1;
                 }
             }
-            else if (other.CompareTag("In_p"))
+            else if (other.CompareTag("In_p")|| other.CompareTag(servebounds[2]) || other.CompareTag(servebounds[3]))
             {
                 if (hitter == 1)
                 {
@@ -96,7 +99,7 @@ public class Ball : MonoBehaviour
                         fulfill = true;
                 }
             }
-            else if (other.CompareTag("In_op"))
+            else if (other.CompareTag("In_op") || other.CompareTag(servebounds[0]) || other.CompareTag(servebounds[1]))
             {
                 if (hitter == 1)
                 {

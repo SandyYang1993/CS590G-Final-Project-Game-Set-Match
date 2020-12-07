@@ -54,6 +54,8 @@ public class GameManager : MonoBehaviour
             {
                 Destroy(ball);
                 ball = null;
+                player.GetComponent<Player>().ball = null;
+                bot.GetComponent<Bot>().ball = null;
             }
                 
             if (Input.GetMouseButtonUp(0))
@@ -65,11 +67,20 @@ public class GameManager : MonoBehaviour
             {
                 Instantiate(ballprefab, standings[(pScore + opScore) % 4], Quaternion.identity);
                 ball = GameObject.FindWithTag("Ball");
-                ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 1, 0);
+                player.GetComponent<Player>().ball = ball.GetComponent<Transform>();
+                bot.GetComponent<Bot>().ball = ball.GetComponent<Transform>();
+                ball.GetComponent<Rigidbody>().velocity = new Vector3(0, 8, 0);
                 if ((pScore + opScore) % 2 == 0)
+                {
                     ball.GetComponent<Ball>().hitter = 0;
+                    player.GetComponent<Player>().serve = true;
+                }
                 else
+                {
                     ball.GetComponent<Ball>().hitter = 3;
+                    bot.GetComponent<Bot>().serve = true;
+                }
+                    
             }
 
             //if ((pScore + opScore) % 4 == 0)
@@ -90,6 +101,14 @@ public class GameManager : MonoBehaviour
             //}
             if (ball.GetComponent<Ball>().hitter == 1 || ball.GetComponent<Ball>().hitter == 2)
                 FSMstate = 2;
+            else if (ball.GetComponent<Ball>().score != 0)
+            {
+                if (ball.GetComponent<Ball>().score == 1)
+                    pScore++;
+                else
+                    opScore++;
+                FSMstate = 3;
+            }
         }
         else if(FSMstate == 2)
         {

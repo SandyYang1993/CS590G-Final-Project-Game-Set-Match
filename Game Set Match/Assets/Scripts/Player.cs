@@ -7,16 +7,17 @@ public class Player : MonoBehaviour
 {
     public Transform aimTarget; // the target where we aim to land the ball
     public int moveState = 0;
-    private float[] Speeds = {0.0f,2.0f,1.0f,3.0f};
+    private float[] Speeds = {0.0f,2.0f,1.0f,5.0f};
     public Vector3 Speed = new Vector3(0, 0, 1);
     public Vector3 Direction = new Vector3(0,0,1);
     public Vector3 Angle = new Vector3(0, -90, 0);
     public float[] Angles = { -90.0f, -135.0f, -45.0f, -180.0f, 0.0f, 90.0f, 135.0f, 45.0f };
     public float MouseX = 0;
     public float MouseY = 0;
-    public string[] Shots = { "BackhandUpswing", "ForehandUpswing", "BackhandChop", "ForehandChop" };
+    public string[] Shots = { "BackhandUpswing", "ForehandUpswing", "BackhandChop", "ForehandChop", "Serve" };
     public float std = 0.02f;
     public int hittercode;
+    public bool serve;
 
     //float force = 13; // ball impact force
 
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
 
     public Transform ball; // the ball 
     Animator animator;
+    public GameObject GameManager;
 
     Vector3 aimTargetInitialPosition; // initial position of the aiming gameObject which is the center of the opposite court
 
@@ -38,10 +40,64 @@ public class Player : MonoBehaviour
         //currentShot = shotManager.topSpin; // defaulting our current shot as topspin
         //Debug.Log(Speeds[3]);
         hittercode = 1;
+        GameManager = GameObject.FindWithTag("Manager");
+        ball = null;
+        serve = false;
     }
 
     void Update()
     {
+        //upper FSM logic: 
+        //for state 0,3,4, the player stay idle and not allow to do anything
+        //for state 1, if it is player's turn to serve, then click to serve;
+        //for state 2, enter normal playing logic
+        if(GameManager.GetComponent<GameManager>().FSMstate == 0 || GameManager.GetComponent<GameManager>().FSMstate == 3 || GameManager.GetComponent<GameManager>().FSMstate == 4)
+        {
+            moveState = 0;
+            Direction = new Vector3(0, 0, 1);
+            Angle = new Vector3(0, Angles[0], 0);
+            animator.SetInteger("MovementState", moveState);
+            Speed = Direction.normalized * Speeds[moveState];
+            transform.Translate(Speed * Time.deltaTime);
+            transform.eulerAngles = Angle;
+            return;
+        }
+        else if(GameManager.GetComponent<GameManager>().FSMstate == 1)
+        {
+            if (ball == null)
+                return;
+            if(ball.GetComponent<Ball>().hitter == 3)
+            {
+                moveState = 0;
+                Direction = new Vector3(0, 0, 1);
+                Angle = new Vector3(0, Angles[0], 0);
+                animator.SetInteger("MovementState", moveState);
+                Speed = Direction.normalized * Speeds[moveState];
+                transform.Translate(Speed * Time.deltaTime);
+                transform.eulerAngles = Angle;
+                return;
+            }
+            else if(ball.GetComponent<Ball>().hitter == 0)
+            {
+                if(serve)
+                {
+                    animator.Play("ServePrepare");
+                    serve = false;
+                }
+                int servetype = DetectShot();
+                if (servetype != -1)
+                {
+                    if (hitting)
+                        CastShot(4);
+                    animator.Play(Shots[4]);
+                    MouseX = 0.0f;
+                    MouseY = 0.0f;
+                }
+                return;
+
+            }
+        }
+        
         //Normal normalDist = new Normal();
         //Debug.Log(normalDist.Sample());
         float h = Input.GetAxisRaw("Horizontal"); // get the horizontal axis of the keyboard
@@ -244,6 +300,8 @@ public class Player : MonoBehaviour
         Vector3 position = ball.position;
         if ((shotType == 0 || shotType == 1) && position.y < 5.2f)
             position.y = 5.2f;
+        if(shotType == 4 && position.y < 5.9f)
+            position.y = 5.9f;
         MouseX = MouseX / 5.0f;
         if (MouseX > 3.0f) MouseX = 3.0f;
         if (MouseX < -3.0f) MouseX = -3.0f;
@@ -263,8 +321,10 @@ public class Player : MonoBehaviour
         Shot current;
         if (shotType == 0 || shotType == 1)
             current = shotManager.upSwing;
-        else
+        else if (shotType == 2 || shotType == 3)
             current = shotManager.chop;
+        else
+            current = shotManager.serve;
 
         upForce = force * current.upForce;
         hitForce = force * current.hitForce + ball.GetComponent<Rigidbody>().velocity.magnitude * current.reflection;
@@ -277,16 +337,25 @@ public class Player : MonoBehaviour
         {
             if (upForce > 4.5f) upForce = 4.5f;
         }
-        if (position.y > 5.2f)
+        if (shotType != 4)
         {
-            upForce = upForce - (position.y - 5.2f) / 0.6f * (upForce * 2.0f / 3.0f);
-            hitForce = hitForce + (position.y - 5.2f) / 0.6f * (hitForce / 2.0f);
+            if (position.y > 5.2f)
+            {
+                upForce = upForce - (position.y - 5.2f) / 0.6f * (upForce * 2.0f / 3.0f);
+                hitForce = hitForce + (position.y - 5.2f) / 0.6f * (hitForce / 2.0f);
+            }
+            if (position.y < 5.2f)
+            {
+                upForce = upForce + (5.2f - position.y) / 0.7f * (upForce / 3.0f);
+                hitForce = hitForce - (5.2f - position.y) / 0.7f * (hitForce / 3.0f);
+            }
         }
-        if (position.y < 5.2f)
+        else
         {
-            upForce = upForce + (5.2f - position.y) / 0.7f * (upForce / 3.0f);
-            hitForce = hitForce - (5.2f - position.y) / 0.7f * (hitForce / 3.0f);
+            upForce = upForce - (position.y - 5.6f) / 0.6f * 0.1f;
+            hitForce = hitForce + (position.y - 5.6f) / 0.6f * (hitForce / 6.0f);
         }
+        
         //Debug.Log(force);
         //Debug.Log(upForce);
         //Debug.Log(hitForce);
@@ -299,8 +368,10 @@ public class Player : MonoBehaviour
         ball.GetComponent<Ball>().fulfill = false;
         if (shotType == 0 || shotType == 1)
             ball.GetComponent<Ball>().shotType = 1;
-        else
+        else if (shotType == 2 || shotType == 3)
             ball.GetComponent<Ball>().shotType = 2;
+        else
+            ball.GetComponent<Ball>().shotType = 0;
     }
 
     private void OnTriggerEnter(Collider other)

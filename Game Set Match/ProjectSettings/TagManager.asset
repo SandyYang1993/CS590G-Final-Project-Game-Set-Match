@@ -10,6 +10,12 @@ TagManager:
   - In_op
   - In_p
   - Bot
+  - Manager
+  - Net
+  - Serve_1
+  - Serve_2
+  - Serve_3
+  - Serve_4
   layers:
   - Default
   - TransparentFX

@@ -15,4 +15,5 @@ public class ShotManager : MonoBehaviour
 {
     public Shot upSwing;
     public Shot chop;
+    public Shot serve;
 }

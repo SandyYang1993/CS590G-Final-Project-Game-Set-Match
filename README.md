@@ -1,5 +1,8 @@
 # CS590G-Final-Project-Game-Set-Match
-This is a tennis game with normal tennis rules. Player can choose different characters, different court types before entering the game. The core is a tennis game to 7, Player vs Bot. Please check the in game instructions on how to play. This document will focus on describing developing details of this game.
+The game we have built is a tennis game with normal tennis rules. . The player will control one of the Character provided to play against a game AI controlled opponent in a tennis court. Both the players and AI controlled opponent will be able to move freely around the court with the singular goal of hitting the ball in a manner such that it cannot be returned. The goal is to win the game based on standard tennis rules. The idea is to make it as realistic to an actual tennis game simulation as possible with an array of difficulty modes that change how well the AI player plays.
+
+Player can choose different characters, different court types before entering the game. The core is a tennis game to 7, Player vs Bot. Please check the in game instructions on how to play. This document will focus on describing developing details of this game.
+
 ## Qifan (Sandy) Yang Contribution
 ### Game flow
 The game flow of the core game is controlled by a upper level FSM defined in GameManager.cs(attached to GameManager object).The states are defined as follows:
@@ -66,7 +69,7 @@ The user is given an opporutnity to choose from a selection of avatars (player t
   * The choices are toggled using a switch case.
   * CourtInt is used in the CourtSelection script and uses a similar logic to the above to store the choice of the user.
 
-### Player control and game mechanism
+### Player animation control and Game mechanism
 After selecting a skeleton mesh to embody player movement, we had to build the player movement up from scratch. Among the different motion animations freely available, we chose ones that worked well witht the asset we had and worked on building the animaition controller to handle player movement. This part is finished by cooperation of Sandy and Mayur
 
 * Player movement control and movement animations:
@@ -78,7 +81,7 @@ After selecting a skeleton mesh to embody player movement, we had to build the p
   * There 5 animations: ForehandUpSwing, BackhandUpSwing, ForehandChop, BackhandChop, Serve;
   * There are no free assets available online. So all the animations above are handmade using the predifined motions which come with the Humanoid asset.  
 
-### Stadium Asset 
+### 3D World and Charecters
 
 Since the game required a playground upon which the entire game could take place, we had to build the complete stadium 3D model from scratch.
 
@@ -89,8 +92,11 @@ Since the game required a playground upon which the entire game could take place
 
 ### Sound Effect and UI(prompts and scores)
 
-Different sound assets were searched for and chosen to be used for the swing animations and for artificial crowd noise.
+Different sound assets were searched for and chosen to be used in the game. This part is finished by cooperation of Sandy and Mayur.
 
-* This part is finished by cooperation of Sandy and Mayur;
+The sound animations used and integrated are:
+* Sounds for the swing animations to be used when the ball is hit by either the player or the bot
+* Sounds for whenever the ball bounes on the ball
+*  Sounds for artificial crowd noise which cheers and boos whenever the player wins or loses the point.
 * Sound Effect uses free audio assets;
 * Prompts and scores are enforced in GameManager.cs;

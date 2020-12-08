@@ -1,6 +1,6 @@
 # CS590G-Final-Project-Game-Set-Match
 This is a tennis game with normal tennis rules. Player can choose different characters, different court types before entering the game. The core is a tennis game to 7, Player vs Bot. Please check the in game instructions on how to play. This document will focus on describing developing details of this game.
-## Qifan(Sandy) Yang Contribution
+## Qifan (Sandy) Yang Contribution
 ### Game flow
 The game flow of the core game is controlled by a upper level FSM defined in GameManager.cs(attached to GameManager object).The states are defined as follows:
 * Set(0): Preparing state before each point. Place Player and Bot in correct position based on serving rotation. Both of them cannot move. Destroy the previous ball.
@@ -56,4 +56,41 @@ The Game AI is basically a middle level FSM. The states are defined as follows:
 * This part is finished by cooperation of Sandy and Mayur;
 * Sound Effect uses free audio assets;
 * Prompts and scores are enforced in GameManager.cs;
+## Mayur Shastri Contribution
+### Charecter and Court Selection
+The user is given an opporutnity to choose from a selection of avatars (player types) and courts before starting the game. The idea of these pages are to give a sense of customizability to the user. Later iterations of the game would build on this to be able to give different charecteristics and strengths to the different avatars. As the game AI develops, the different courts can have different charecteristics that affects the way the ball bounces on the courts. 
 
+* Both Charecter Selection and Court Selection scripts use PlayerPrefs to store user choice. 
+  * CharecterInt and OpponentCharecterInt are variables used in the CharecterSelection script.
+  * They are simple integer objects that is used to denote the choice of the user.
+  * The choices are toggled using a switch case.
+  * CourtInt is used in the CourtSelection script and uses a similar logic to the above to store the choice of the user.
+
+### Player control and game mechanism
+After selecting a skeleton mesh to embody player movement, we had to build the player movement up from scratch. Among the different motion animations freely available, we chose ones that worked well witht the asset we had and worked on building the animaition controller to handle player movement. This part is finished by cooperation of Sandy and Mayur
+
+* Player movement control and movement animations:
+  * Movement animations are online free assets;
+  * Player have 4 movement states: idle, jog, jogback, sprint, each with different speed;
+  * Player can move to 8 directions;
+  * The control is based on the lower level animator FSM;
+* Player shots animation
+  * There 5 animations: ForehandUpSwing, BackhandUpSwing, ForehandChop, BackhandChop, Serve;
+  * There are no free assets available online. So all the animations above are handmade using the predifined motions which come with the Humanoid asset.  
+
+### Stadium Asset 
+
+Since the game required a playground upon which the entire game could take place, we had to build the complete stadium 3D model from scratch.
+
+* The stadium asset includes:
+  * The main court along with the court set to dimensions.
+  * A transparent net 
+  * The stands model upon which the fans/audience can be seated.
+
+### Sound Effect and UI(prompts and scores)
+
+Different sound assets were searched for and chosen to be used for the swing animations and for artificial crowd noise.
+
+* This part is finished by cooperation of Sandy and Mayur;
+* Sound Effect uses free audio assets;
+* Prompts and scores are enforced in GameManager.cs;

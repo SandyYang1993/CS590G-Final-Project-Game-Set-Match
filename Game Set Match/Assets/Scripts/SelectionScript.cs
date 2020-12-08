@@ -37,50 +37,44 @@ public class SelectionScript : MonoBehaviour
 
     private void Awake(){
 
-    	CharecterPosition = avatar1.transform.position;
-    	OffScreen = avatar2.transform.position;
-        OpponentCharecterPosition = opponentAvatar1.transform.position;
-        OpponentOffScreen = opponentAvatar2.transform.position;
+        avatar1.SetActive(true);
+        avatar2.SetActive(false);
+        avatar3.SetActive(false);
+        avatar4.SetActive(false);
+        opponentAvatar1.SetActive(true);
+        opponentAvatar2.SetActive(false);
+        opponentAvatar3.SetActive(false);
+        opponentAvatar4.SetActive(false);
 
     }
 
     public void NextCharecter(){    	
 
-    	switch(CharecterInt){
+        // Vector3 offset = new Vector3(300.0f,0,0);
+    	
+        switch(CharecterInt){
     		case 1:
                 PlayerPrefs.SetInt(playerAvatar,1);
     			avatar1.SetActive(false) ;
-    			avatar1.transform.position = OffScreen;
-    			avatar2.transform.position = CharecterPosition;
     			avatar2.SetActive(true);
-    			Debug.Log("Player Changed to: " + avatar2.name);
     			CharecterInt++;
     			break;
     		case 2:
                 PlayerPrefs.SetInt(playerAvatar,2);
     			avatar2.SetActive(false) ;
-    			avatar2.transform.position = OffScreen;
-    			avatar3.transform.position = CharecterPosition;
     			avatar3.SetActive(true);
-    			Debug.Log("Player Changed to: " + avatar3.name);
     			CharecterInt++;
     			break;
     		case 3:
                 PlayerPrefs.SetInt(playerAvatar,3);
     			avatar3.SetActive(false) ;
-    			avatar3.transform.position = OffScreen;
-    			avatar4.transform.position = CharecterPosition;
     			avatar4.SetActive(true);
-    			Debug.Log("Player Changed to: " + avatar4.name);
     			CharecterInt++;
     			break;
     		case 4:
                 PlayerPrefs.SetInt(playerAvatar,4);
     			avatar4.SetActive(false) ;
-    			avatar4.transform.position = OffScreen;
-    			avatar1.transform.position = CharecterPosition;
     			avatar1.SetActive(true);
-    			Debug.Log("Player Changed to: " + avatar1.name);
     			ResetInt();
     			break;
     		default:
@@ -91,41 +85,30 @@ public class SelectionScript : MonoBehaviour
     }
 
     public void PrevCharecter(){
+        
     	switch(CharecterInt){
     		case 1:
                 PlayerPrefs.SetInt(playerAvatar,4);
     			avatar2.SetActive(false) ;
-    			avatar2.transform.position = OffScreen;
-    			avatar1.transform.position = CharecterPosition;
     			avatar1.SetActive(true);
-    			Debug.Log("Player Changed to: " + avatar2.name);
     			ResetInt();
     			break;
     		case 2:
                 PlayerPrefs.SetInt(playerAvatar,1);
     			avatar3.SetActive(false) ;
-    			avatar3.transform.position = OffScreen;
-    			avatar2.transform.position = CharecterPosition;
     			avatar2.SetActive(true);
-    			Debug.Log("Player Changed to: " + avatar2.name);
     			CharecterInt--;
     			break;
     		case 3:
                 PlayerPrefs.SetInt(playerAvatar,2);
     			avatar4.SetActive(false) ;
-    			avatar4.transform.position = OffScreen;
-    			avatar3.transform.position = CharecterPosition;
     			avatar3.SetActive(true);
-    			Debug.Log("Player Changed to: " + avatar2.name);
     			CharecterInt--;
     			break;
     		case 4:
                 PlayerPrefs.SetInt(playerAvatar,3);
     			avatar1.SetActive(false) ;
-    			avatar1.transform.position = OffScreen;
-    			avatar4.transform.position = CharecterPosition;
     			avatar4.SetActive(true);
-    			Debug.Log("Player Changed to: " + avatar3.name);
     			CharecterInt--;
     			break;
     		default:
@@ -141,37 +124,25 @@ public class SelectionScript : MonoBehaviour
             case 1:
                 PlayerPrefs.SetInt(opponentAvatar,1);
                 opponentAvatar1.SetActive(false) ;
-                opponentAvatar1.transform.position = OpponentOffScreen;
-                opponentAvatar2.transform.position = OpponentCharecterPosition;
                 opponentAvatar2.SetActive(true);
-                Debug.Log("Player Changed to: " + opponentAvatar2.name);
                 OpponentCharecterInt++;
                 break;
             case 2:
                 PlayerPrefs.SetInt(opponentAvatar,2);
                 opponentAvatar2.SetActive(false) ;
-                opponentAvatar2.transform.position = OpponentOffScreen;
-                opponentAvatar3.transform.position = OpponentCharecterPosition;
                 opponentAvatar3.SetActive(true);
-                Debug.Log("Player Changed to: " + opponentAvatar3.name);
                 OpponentCharecterInt++;
                 break;
             case 3:
                 PlayerPrefs.SetInt(opponentAvatar,3);
                 opponentAvatar3.SetActive(false) ;
-                opponentAvatar3.transform.position = OpponentOffScreen;
-                opponentAvatar4.transform.position = OpponentCharecterPosition;
                 opponentAvatar4.SetActive(true);
-                Debug.Log("Player Changed to: " + opponentAvatar4.name);
                 OpponentCharecterInt++;
                 break;
             case 4:
                 PlayerPrefs.SetInt(opponentAvatar,4);
                 opponentAvatar4.SetActive(false) ;
-                opponentAvatar4.transform.position = OpponentOffScreen;
-                opponentAvatar1.transform.position = OpponentCharecterPosition;
                 opponentAvatar1.SetActive(true);
-                Debug.Log("Player Changed to: " + opponentAvatar1.name);
                 OpponentResetInt();
                 break;
             default:
@@ -186,37 +157,25 @@ public class SelectionScript : MonoBehaviour
             case 1:
                 PlayerPrefs.SetInt(opponentAvatar,4);
                 opponentAvatar2.SetActive(false) ;
-                opponentAvatar2.transform.position = OpponentOffScreen;
-                opponentAvatar1.transform.position = OpponentCharecterPosition;
                 opponentAvatar1.SetActive(true);
-                Debug.Log("Player Changed to: " + opponentAvatar2.name);
                 OpponentResetInt();
                 break;
             case 2:
                 PlayerPrefs.SetInt(opponentAvatar,1);
                 opponentAvatar3.SetActive(false) ;
-                opponentAvatar3.transform.position = OpponentOffScreen;
-                opponentAvatar2.transform.position = OpponentCharecterPosition;
                 opponentAvatar2.SetActive(true);
-                Debug.Log("Player Changed to: " + opponentAvatar2.name);
                 OpponentCharecterInt--;
                 break;
             case 3:
                 PlayerPrefs.SetInt(opponentAvatar,2);
                 opponentAvatar4.SetActive(false) ;
-                opponentAvatar4.transform.position = OpponentOffScreen;
-                opponentAvatar3.transform.position = OpponentCharecterPosition;
                 opponentAvatar3.SetActive(true);
-                Debug.Log("Player Changed to: " + opponentAvatar2.name);
                 OpponentCharecterInt--;
                 break;
             case 4:
                 PlayerPrefs.SetInt(opponentAvatar,3);
                 opponentAvatar1.SetActive(false) ;
-                opponentAvatar1.transform.position = OpponentOffScreen;
-                opponentAvatar4.transform.position = OpponentCharecterPosition;
                 opponentAvatar4.SetActive(true);
-                Debug.Log("Player Changed to: " + opponentAvatar3.name);
                 OpponentCharecterInt--;
                 break;
             default:

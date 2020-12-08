@@ -57,3 +57,5 @@ The Game AI is basically a middle level FSM. The states are defined as follows:
 * Sound Effect uses free audio assets;
 * Prompts and scores are enforced in GameManager.cs;
 
+## Mayur Shastri Contribution
+### Charecter Selection

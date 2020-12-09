@@ -2165,7 +2165,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 260, y: 200}
+  m_AnchoredPosition: {x: 400, y: 200}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1178969754
@@ -2288,7 +2288,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 260, y: 230}
+  m_AnchoredPosition: {x: 400, y: 230}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1236553739
@@ -3086,8 +3086,8 @@ MonoBehaviour:
   - {x: -3.37, y: 4.5456, z: -4.5}
   - {x: 12.92768, y: 4.5456, z: -4.5}
   - {x: -3.37, y: 4.5456, z: -1.5}
-  playerprefab: {fileID: 6674184519850567400, guid: 85bb2220259e52c4589fd118ac3292e8, type: 3}
-  botprefab: {fileID: 7385028152200113763, guid: 72d22c6687191354f81f9b9cc8035a16, type: 3}
+  playerprefab: {fileID: 2662724734650027588, guid: bf5e178d279dbb143a8d9243b0681017, type: 3}
+  botprefab: {fileID: 8027269464785314819, guid: 9de6104bcbc657e4297ea89626af3a26, type: 3}
   ballprefab: {fileID: 2580939398917067204, guid: 73aae982d0daa8d4192229e3a2dd93e3, type: 3}
   player: {fileID: 0}
   bot: {fileID: 0}

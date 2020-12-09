@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
         bot = GameObject.FindWithTag("Bot");
         ball = null;
         source = GetComponent<AudioSource>();
+        Time.timeScale = 0.7f;
+
     }
 
     

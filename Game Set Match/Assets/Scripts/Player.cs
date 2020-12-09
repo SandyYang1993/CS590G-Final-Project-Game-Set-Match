@@ -18,6 +18,10 @@ public class Player : MonoBehaviour
     public float std = 0.02f;
     public int hittercode;
     public bool serve;
+    public float teleportdis = 1.75f;
+    private GameObject tel;
+    public GameObject telprefab;
+    private int tel_time = 0;
 
     //float force = 13; // ball impact force
 
@@ -147,7 +151,7 @@ public class Player : MonoBehaviour
             MouseX = 0.0f;
             MouseY = 0.0f;
         }
-            
+        SuperPower();
         
         if(animator.GetCurrentAnimatorStateInfo(0).IsTag("Shot"))
         {
@@ -195,6 +199,41 @@ public class Player : MonoBehaviour
         }
         */
 
+
+    }
+    internal void SuperPower()
+    {
+        if (!Input.GetKeyDown(KeyCode.Space)) return;
+        Vector3 d;
+        if(Input.GetKey(KeyCode.W))
+        {
+            if (Input.GetKey(KeyCode.A))
+                d = new Vector3(-1, 0, -1);
+            else if (Input.GetKey(KeyCode.D))
+                d = new Vector3(-1, 0, 1);
+            else
+                d = new Vector3(-1, 0, 0);
+        }
+        else if(Input.GetKey(KeyCode.S))
+        {
+            if (Input.GetKey(KeyCode.A))
+                d = new Vector3(1, 0, -1);
+            else if (Input.GetKey(KeyCode.D))
+                d = new Vector3(1, 0, 1);
+            else
+                d = new Vector3(1, 0, 0);
+        }
+        else if(Input.GetKey(KeyCode.A))
+            d = new Vector3(0, 0, -1);
+        else if(Input.GetKey(KeyCode.D))
+            d = new Vector3(0, 0, 1);
+        else d = new Vector3(-1, 0, 0);
+        d = d.normalized*teleportdis;
+        Vector3 position = transform.position + d;
+        if (tel != null) Destroy(tel);
+        tel =(GameObject)Instantiate(telprefab, transform.position+new Vector3(0,0.2f,0), Quaternion.identity);
+        Destroy(tel, 1);
+        transform.position = position;
 
     }
     internal void TurnToDirection(int moveState, int dir)

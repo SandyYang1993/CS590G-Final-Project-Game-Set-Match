@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         }
         ball = null;
         source = GetComponent<AudioSource>();
-        Time.timeScale = 0.7f;
+        Time.timeScale = 0.5f;
 
     }
 

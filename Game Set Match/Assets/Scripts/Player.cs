@@ -65,12 +65,13 @@ public class Player : MonoBehaviour
     void Update()
     {
         supercount++;
-        if(supercount>=200)
+        if(supercount>=500)
         {
             supercount = 0;
             racket.GetComponent<MeshRenderer>().material = origin;
         }
-        
+        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Shot"))
+            return;
         //upper FSM logic: 
         //for state 0,3,4, the player stay idle and not allow to do anything
         //for state 1, if it is player's turn to serve, then click to serve;
@@ -181,12 +182,12 @@ public class Player : MonoBehaviour
         }
             
         
-        if(animator.GetCurrentAnimatorStateInfo(0).IsTag("Shot"))
-        {
-            moveState = 0;
-            Direction = new Vector3(0, 0, 1);
-            Angle = new Vector3(0, -90, 0);
-        }
+        //if(animator.GetCurrentAnimatorStateInfo(0).IsTag("Shot"))
+        //{
+        //    moveState = 0;
+        //    Direction = new Vector3(0, 0, 1);
+        //    Angle = new Vector3(0, -90, 0);
+        //}
         animator.SetInteger("MovementState", moveState);
         Speed = Direction.normalized * Speeds[moveState];
         transform.Translate(Speed * Time.deltaTime);

@@ -72,8 +72,8 @@ public class Ball : MonoBehaviour
                 return;
             else if(!fulfill)
             {
-                Debug.Log(transform.position);
-                Debug.Log(other.tag);
+                //Debug.Log(transform.position);
+                //Debug.Log(other.tag);
                 if (other.CompareTag(servebounds[serveindex]))
                 {
                     fulfill = true;

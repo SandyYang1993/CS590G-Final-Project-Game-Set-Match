@@ -487,7 +487,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 159, y: 73}
-  m_SizeDelta: {x: 250, y: 70}
+  m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &196863915
 MonoBehaviour:
@@ -1423,6 +1423,8 @@ MonoBehaviour:
   bottext: {fileID: 701890428}
   playerlocation: {x: 413.428, y: 196.727, z: -236.66}
   botlocation: {x: 410.35, y: 196.727, z: -220.88}
+  player: {fileID: 0}
+  bot: {fileID: 0}
 --- !u!4 &743402230
 Transform:
   m_ObjectHideFlags: 0

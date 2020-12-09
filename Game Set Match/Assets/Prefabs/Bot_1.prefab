@@ -1451,7 +1451,7 @@ MonoBehaviour:
   frontreturn: -1.5
   backreturn: -4
   framecount: 0
-  framerate: 5
+  framerate: 100
   catchspeed: 5
   ball_around: 0.4
   g: 9.8
@@ -1493,7 +1493,7 @@ MonoBehaviour:
     upForce: 0.7
     hitForce: 2.4
     reflection: 0
-    drag: 0.2
+    drag: 0.4
   chop:
     upForce: 0.8
     hitForce: 1.6

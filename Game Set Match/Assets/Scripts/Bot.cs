@@ -68,6 +68,7 @@ public class Bot : MonoBehaviour
         //for state 0,3,4, the bot stay idle and not allow to do anything
         //for state 1, if it is bot's turn to serve, then try to serve;
         //for state 2, enter ,low level AI FSM
+        //Debug.Log(animator.GetInteger("MovementState"));
         if (GameManager.GetComponent<GameManager>().FSMstate == 0 || GameManager.GetComponent<GameManager>().FSMstate == 3 || GameManager.GetComponent<GameManager>().FSMstate == 4)
         {
             moveState = 0;

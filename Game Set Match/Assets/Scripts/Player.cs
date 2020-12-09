@@ -70,11 +70,12 @@ public class Player : MonoBehaviour
             supercount = 0;
             racket.GetComponent<MeshRenderer>().material = origin;
         }
+        
         //upper FSM logic: 
         //for state 0,3,4, the player stay idle and not allow to do anything
         //for state 1, if it is player's turn to serve, then click to serve;
         //for state 2, enter normal playing logic
-        if(GameManager.GetComponent<GameManager>().FSMstate == 0 || GameManager.GetComponent<GameManager>().FSMstate == 3 || GameManager.GetComponent<GameManager>().FSMstate == 4)
+        if (GameManager.GetComponent<GameManager>().FSMstate == 0 || GameManager.GetComponent<GameManager>().FSMstate == 3 || GameManager.GetComponent<GameManager>().FSMstate == 4)
         {
             moveState = 0;
             Direction = new Vector3(0, 0, 1);
@@ -125,7 +126,7 @@ public class Player : MonoBehaviour
         //Debug.Log(normalDist.Sample());
         float h = Input.GetAxisRaw("Horizontal"); // get the horizontal axis of the keyboard
         float v = Input.GetAxisRaw("Vertical"); // get the vertical axis of the keyboard
-
+        
         moveState = 0;
         Angle = new Vector3(0, -90, 0);
         Direction = new Vector3(0, 0, 1);
@@ -169,6 +170,9 @@ public class Player : MonoBehaviour
             animator.Play(Shots[shotType]);
             MouseX = 0.0f;
             MouseY = 0.0f;
+            moveState = 0;
+            Direction = new Vector3(0, 0, 1);
+            Angle = new Vector3(0, -90, 0);
         }
         if(energy.fillAmount>0.99f && Input.GetKeyDown(KeyCode.Space))
         {
@@ -387,9 +391,9 @@ public class Player : MonoBehaviour
             MouseX += Input.GetAxis("Mouse X");
             MouseY += Input.GetAxis("Mouse Y");
         }
-        if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
-            if(MouseY>=0)
+            if (MouseY >= 0)
             {
                 if (ball.position.z < transform.position.z)
                     shotType = 0;
@@ -406,7 +410,31 @@ public class Player : MonoBehaviour
             //MouseX = 0.0f;
             //MouseY = 0.0f;
         }
-        return shotType;
+        //if (hitting)
+        //{
+        //    if (MouseY >= 0)
+        //    {
+        //        if (ball.position.z < transform.position.z)
+        //            shotType = 0;
+        //        else
+        //            shotType = 1;
+        //    }
+        //    else
+        //    {
+        //        if (ball.position.z < transform.position.z)
+        //            shotType = 2;
+        //        else
+        //            shotType = 3;
+        //    }
+        //    //MouseX = 0.0f;
+        //    //MouseY = 0.0f;
+        //}
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    MouseX = 0.0f;
+        //    MouseY = 0.0f;
+        //}
+            return shotType;
 
     }
     internal void CastShot(int shotType)

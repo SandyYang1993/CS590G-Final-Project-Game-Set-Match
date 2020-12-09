@@ -7,7 +7,7 @@ public class Bot : MonoBehaviour
 {
     public int FSMstate = 0; //3 states, 0:returning to middle position; 1:moving to catch the ball; 2:hitting the ball
     public int moveState = 0;
-    private float[] Speeds = { 0.0f, 2.0f, 1.0f, 5.0f };
+    public float[] Speeds = { 0.0f, 2.0f, 1.0f, 5.0f };
     public Vector3 Speed = new Vector3(0, 0, -1);
     public Vector3 Direction = new Vector3(0, 0, 1);
     public Vector3 Angle = new Vector3(0, 90, 0);
@@ -23,9 +23,9 @@ public class Bot : MonoBehaviour
     public float frontreturn = -1.5f;
     public float backreturn = -4.0f;
     public int framecount = 0;
-    public int framerate = 5;
+    public int framerate = 50;
     public float catchspeed = 5.0f;
-    public float ball_around = 0.2f;
+    public float ball_around = 0.4f;
     public float g = 9.8f;
     public float ybase = 4.52f;
     public float decay_1 = 0.7f;
@@ -104,7 +104,7 @@ public class Bot : MonoBehaviour
                     animator.Play("ServePrepare");
                     serve = false;
                 }
-                if(ball.position.y <=6.1f && ball.GetComponent<Rigidbody>().velocity.y<0)
+                if(ball.position.y <=6.25f && ball.GetComponent<Rigidbody>().velocity.y<0)
                 {
                     if(transform.position.z<-3.2f)
                     {
@@ -234,9 +234,21 @@ public class Bot : MonoBehaviour
     //campare these points, find a feasible point with the most early timestamp; 
     internal void MoveToCatch()
     {
-        //if (framecount % framerate != 0)
-        //    return;
-        //framecount++;
+        if (framecount % framerate != 0)
+        {
+            moveState = 3;
+            Direction = new Vector3(0, 0, 1);
+            Angle = new Vector3(0, Angles[angleindex], 0);
+            animator.SetInteger("MovementState", moveState);
+            Speed = Direction.normalized * Speeds[moveState];
+
+            transform.Translate(Speed * Time.deltaTime);
+            transform.eulerAngles = Angle;
+            framecount++;
+            return;
+        }
+
+        framecount++;
         Vector2 bot = new Vector2(transform.position.x, transform.position.z);
         Vector2 bal_mid = new Vector2(ball.position.x, ball.position.z);
         Vector2 bal_left = new Vector2(ball.position.x, ball.position.z-ball_around);
@@ -391,7 +403,7 @@ public class Bot : MonoBehaviour
         shotdir.z = Guess(shotdir.z);
         //shotdir = shotdir.normalized;
         int shotType;
-        if (shotdis<=7.5f && position.y>=4.9f)
+        if (shotdis<=8.5f && position.y>=4.9f)
         {
             if (ball.position.z <= transform.position.z)
                 shotType = 3;
@@ -502,7 +514,7 @@ public class Bot : MonoBehaviour
         }
         else
         {
-            upForce = upForce - (position.y - 5.6f) / 0.6f * 0.1f;
+            upForce = upForce - (position.y - 5.6f) / 0.8f * 0.1f;
             hitForce = hitForce + (position.y - 5.6f) / 0.6f * (hitForce / 6.0f);
         }
         //Debug.Log(force);

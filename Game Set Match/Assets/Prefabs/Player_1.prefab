@@ -625,6 +625,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aimTarget: {fileID: 0}
   moveState: 0
+  Speeds:
+  - 0
+  - 2
+  - 1
+  - 5
   Speed: {x: 0, y: 0, z: 1}
   Direction: {x: 0, y: 0, z: 1}
   Angle: {x: 0, y: -90, z: 0}
@@ -650,6 +655,11 @@ MonoBehaviour:
   serve: 0
   teleportdis: 1.75
   telprefab: {fileID: 8040369801591309935, guid: 5dcac77585d708b498a35ac1431e1a01, type: 3}
+  racket: {fileID: 569134501643291360}
+  origin: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  super: {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
+  MouseXbase: 15
+  MouseYbase: 8
   hitting: 0
   ball: {fileID: 0}
   GameManager: {fileID: 0}
@@ -664,8 +674,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5608127, y: 2.5323079, z: 1.1457753}
-  m_Center: {x: 0.3557924, y: 1.253058, z: 0.19215755}
+  m_Size: {x: 2.939583, y: 3.3424752, z: 2.001368}
+  m_Center: {x: 0.3983072, y: 1.6581416, z: -0.049988545}
 --- !u!1 &2856829724120318853
 GameObject:
   m_ObjectHideFlags: 0
@@ -2567,5 +2577,10 @@ PrefabInstance:
 --- !u!4 &9182020278866335613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2408849856945262209, guid: a76e66ebfce8eb24b97940377318d833, type: 3}
+  m_PrefabInstance: {fileID: 6773663313717615100}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &569134501643291360 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6477612455821693724, guid: a76e66ebfce8eb24b97940377318d833, type: 3}
   m_PrefabInstance: {fileID: 6773663313717615100}
   m_PrefabAsset: {fileID: 0}

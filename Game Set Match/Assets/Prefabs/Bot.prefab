@@ -1892,7 +1892,7 @@ GameObject:
   - component: {fileID: 2054113854440341232}
   - component: {fileID: 3236146564231321442}
   m_Layer: 0
-  m_Name: PlayerBot
+  m_Name: Bot
   m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1960,6 +1960,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FSMstate: 0
   moveState: 0
+  Speeds:
+  - 0
+  - 2
+  - 1
+  - 5
   Speed: {x: 0, y: 0, z: -1}
   Direction: {x: 0, y: 0, z: 1}
   Angle: {x: 0, y: 90, z: 0}
@@ -1990,7 +1995,7 @@ MonoBehaviour:
   framecount: 0
   framerate: 5
   catchspeed: 5
-  ball_around: 0.2
+  ball_around: 0.4
   g: 9.8
   ybase: 4.52
   decay_1: 0.7

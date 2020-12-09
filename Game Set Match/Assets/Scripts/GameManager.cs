@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static SelectionScript;
+using static CourtSelectionScript;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public int winner; //0 for player, 1 for bot
+    public static int winner; //0 for player, 1 for bot
     public int pScore;
     public int opScore;
     public int FSMstate;
     public Vector3[] ballpositions = { new Vector3(12.92768f, 5.0f, -1.5f), new Vector3(-3.37f, 5.0f, -4.5f), new Vector3(12.92768f, 5.0f, -4.5f), new Vector3(-3.37f, 5.0f, -1.5f) };
     public Vector3[] standings = { new Vector3(12.92768f, 4.5456f, -1.5f), new Vector3(-3.37f, 4.5456f, -4.5f), new Vector3(12.92768f, 4.5456f, -4.5f), new Vector3(-3.37f, 4.5456f, -1.5f) };
-    public GameObject playerprefab;
-    public GameObject botprefab;
+    public GameObject[] playerprefabs;
+    public GameObject[] botprefabs;
+    private GameObject playerprefab;
+    private GameObject botprefab;
     public GameObject ballprefab;
     public GameObject player;
     public GameObject bot;
@@ -23,6 +28,16 @@ public class GameManager : MonoBehaviour
     public AudioClip cheerplayer;
     public AudioClip cheerbot;
     private AudioSource source;
+
+    public Material hard;
+    public Material clay;
+
+    public PhysicMaterial hardm;
+    public PhysicMaterial claym;
+
+    public GameObject court;
+
+    public Image energy;
 
     //5 states:
     //0 game set: place player at initial position. no one moves now. destroy the previous ball. leftclick to serve state.
@@ -37,10 +52,28 @@ public class GameManager : MonoBehaviour
         playerscoredis.text = "Player: " + pScore;
         botscoredis.text = "Bot:     " + opScore;
         FSMstate = 0;
+        if (SelectionScript.Charecter)
+            playerprefab = playerprefabs[0];
+        else
+            playerprefab = playerprefabs[1];
+        if (SelectionScript.OpponentCharecter)
+            botprefab = botprefabs[0];
+        else
+            botprefab = botprefabs[1];
         Instantiate(playerprefab, standings[0], Quaternion.identity);
         Instantiate(botprefab, standings[1], Quaternion.identity);
         player = GameObject.FindWithTag("Player");
         bot = GameObject.FindWithTag("Bot");
+        if(CourtSelectionScript.Court)
+        {
+            court.GetComponent<MeshRenderer>().material = hard;
+            court.GetComponent<Collider>().material = hardm;
+        }
+        else
+        {
+            court.GetComponent<MeshRenderer>().material = clay;
+            court.GetComponent<Collider>().material = claym;
+        }
         ball = null;
         source = GetComponent<AudioSource>();
         Time.timeScale = 0.7f;
@@ -192,6 +225,7 @@ public class GameManager : MonoBehaviour
         else if (FSMstate == 4)
         {
             //go to the postmatch scene;
+            SceneManager.LoadScene("EngGame");
         }
     }
 

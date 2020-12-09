@@ -16,6 +16,7 @@ TagManager:
   - Serve_2
   - Serve_3
   - Serve_4
+  - Energy
   layers:
   - Default
   - TransparentFX

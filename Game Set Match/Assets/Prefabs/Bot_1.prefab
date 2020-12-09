@@ -1363,7 +1363,7 @@ GameObject:
   - component: {fileID: 3326535321753641402}
   - component: {fileID: 3245444468531471579}
   m_Layer: 0
-  m_Name: HumanoidBotAvatar_03
+  m_Name: Bot_1
   m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1418,6 +1418,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FSMstate: 0
   moveState: 0
+  Speeds:
+  - 0
+  - 2
+  - 1
+  - 5
   Speed: {x: 0, y: 0, z: -1}
   Direction: {x: 0, y: 0, z: 1}
   Angle: {x: 0, y: 90, z: 0}
@@ -1448,7 +1453,7 @@ MonoBehaviour:
   framecount: 0
   framerate: 5
   catchspeed: 5
-  ball_around: 0.2
+  ball_around: 0.4
   g: 9.8
   ybase: 4.52
   decay_1: 0.7

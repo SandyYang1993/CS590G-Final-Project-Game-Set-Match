@@ -65,12 +65,6 @@ The Game AI is basically a middle level FSM. The states are defined as follows:
 * The super powers require energy to release. The energy bar is added at the bottom left of the screen. Successfully hitting the ball will increase the energy by 25%. Using the super power will require 100% energy level.
 * The red character have a teleport power. The user can press space and any of W,A,S,D to release it. There will be a partical effect appear at the original position, but somehow it always comes late.
 * The blue character have an auto upswing power. The user can press space while the ball is in the charater's trigger area. The character will perform an upswing to hit the ball to the corner far away from the bot. While performing it, the racket of the player will change color.
-### Final Thoughts
-* Sports games can be hard to design and implement in that:
-  * Special animation required: we cannot found free animation assets for tennis so we have to handmade them.
-  * Maybe better physics engine required: while testing, I noticed that sometimes the onTriggerEnter function did not work which broke the tennis rules. After countless testings, I finally found out it is probabaly because the ball was bouncing to quick from the ground and it escaped fixed time update.(I have two sets of colliders for the court, one for physics material, one for checking bounds) I changed the fix update time to 0.005s and raise the trigger colliders up but the issue can still happen sometimes.
-  * The AI can be hard to design: For this game, the function that drives Bot to catch the ball is the hardest one. The algorithm I described above roughly solve the problem, but the Bot would look very twinkling because it is calculating each frame. I changed it to update its moving state every 20 frames but it still looks unhuman.
-* Finally, the game is not quite successful largely due to the control design (click the button, swing it and release to perform a shot) which is simply too hard to perform in real time. In the end I have to increase the space of the player trigger collider and slow the time to 0.5 to get a chance against Bot. It can be really shameful to cheat in my own game.
 ## Mayur Shastri Contribution
 ### Charecter and Court Selection
 The user is given an opporutnity to choose from a selection of avatars (player types) and courts before starting the game. The idea of these pages are to give a sense of customizability to the user. Later iterations of the game would build on this to be able to give different charecteristics and strengths to the different avatars. As the game AI develops, the different courts can have different charecteristics that affects the way the ball bounces on the courts. 
@@ -112,3 +106,10 @@ The sound animations used and integrated are:
 *  Sounds for artificial crowd noise which cheers and boos whenever the player wins or loses the point.
 * Sound Effect uses free audio assets;
 * Prompts and scores are enforced in GameManager.cs;
+
+## Final Thoughts
+* Sports games can be hard to design and implement in that:
+  * Special animation required: we cannot found free animation assets for tennis so we have to handmade them.
+  * Maybe better physics engine required: while testing, I noticed that sometimes the onTriggerEnter function did not work which broke the tennis rules. After countless testings, I finally found out it is probabaly because the ball was bouncing to quick from the ground and it escaped fixed time update.(I have two sets of colliders for the court, one for physics material, one for checking bounds) I changed the fix update time to 0.005s and raise the trigger colliders up but the issue can still happen sometimes.
+  * The AI can be hard to design: For this game, the function that drives Bot to catch the ball is the hardest one. The algorithm I described above roughly solve the problem, but the Bot would look very twinkling because it is calculating each frame. I changed it to update its moving state every 20 frames but it still looks unhuman.
+* Finally, the game is not quite successful largely due to the control design (click the button, swing it and release to perform a shot) which is simply too hard to perform in real time. In the end I have to increase the space of the player trigger collider and slow the time to 0.5 to get a chance against Bot. It can be really shameful to cheat in my own game.
